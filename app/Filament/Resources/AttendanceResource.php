@@ -12,9 +12,14 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Auth;
 
 class AttendanceResource extends Resource
 {
+    protected function getSavedNotificationTitle(): ?string
+    {
+        return 'Attendance Diperbarui';
+    }
     protected static ?string $model = Attendance::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -23,7 +28,7 @@ class AttendanceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user.name')
+                Forms\Components\TextInput::make('user_id')
                     ->label('User Name')
                     ->required()
                     ->readOnly(),
@@ -57,6 +62,13 @@ class AttendanceResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(function (Builder $query) {
+                $is_super_admin = Auth::user()->hasRole('super_admin');
+
+                if (!$is_super_admin) {
+                    $query->where('user_id', Auth::user()->id);
+                }
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tanggal')
