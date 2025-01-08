@@ -28,10 +28,10 @@ class AttendanceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
+                Forms\Components\Select::make('user')
+                    ->relationship('user', 'name')
                     ->label('User Name')
-                    ->required()
-                    ->readOnly(),
+                    ->disabled(),
                 Forms\Components\TextInput::make('schedule_latitude')
                     ->required()
                     ->numeric(),
@@ -73,11 +73,23 @@ class AttendanceResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tanggal')
                     ->date()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Nama Pegawai')
-                    ->numeric()
+                    ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('is_late')
+                    ->label('Status')
+                    ->badge()
+                    ->getStateUsing(function ($record) {
+                        return $record->isLate() ? 'Terlambat' : 'Tepat Waktu';
+                    })
+                    ->color(fn(string $state): string => match ($state) {
+                        'Terlambat' => 'marah',
+                        'Tepat Waktu' => 'lemon',
+                    })
+                    ->description(fn(Attendance $record): string => 'Durasi Kerja : ' . $record->getWorkDuration()),
                 Tables\Columns\TextColumn::make('start_time')
                     ->label('Waktu Datang'),
                 Tables\Columns\TextColumn::make('end_time')
@@ -91,6 +103,7 @@ class AttendanceResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])

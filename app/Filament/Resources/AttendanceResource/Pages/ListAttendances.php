@@ -16,7 +16,7 @@ class ListAttendances extends ListRecords
         return [
             Action::make('presensi')
                 ->url(route('presensi'))
-                ->color('success'),
+                ->color('aw'),
             Actions\CreateAction::make(),
         ];
     }
