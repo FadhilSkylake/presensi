@@ -25,7 +25,7 @@
                          </div>
                      </div>
                  </div>
- 
+
                  <div>
                      <h2 class="text-2xl font-bold mb-2">Presensi</h2>
                      <div id="map" class="mb-4 rounded-lg border border-gray-300" wire:ignore></div>
