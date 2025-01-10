@@ -16,11 +16,13 @@ use Auth;
 
 class ScheduleResource extends Resource
 {
+    protected static ?string $navigationGroup = 'Attendance Management';
+
     protected static ?string $model = Schedule::class;
 
     protected static ?string $navigationIcon = 'heroicon-m-calendar-days';
 
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 7;
 
     public static function form(Form $form): Form
     {

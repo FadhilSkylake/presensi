@@ -18,9 +18,13 @@ use Auth;
 
 class LeaveResource extends Resource
 {
+    protected static ?int $navigationSort = 9;
+
+    protected static ?string $navigationGroup = 'Attendance Management';
+
     protected static ?string $model = Leave::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-c-x-circle';
 
     public static function form(Form $form): Form
     {

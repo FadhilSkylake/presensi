@@ -16,6 +16,8 @@ use Auth;
 
 class AttendanceResource extends Resource
 {
+    protected static ?string $navigationGroup = 'Attendance Management';
+
     protected function getSavedNotificationTitle(): ?string
     {
         return 'Attendance Diperbarui';
@@ -23,6 +25,8 @@ class AttendanceResource extends Resource
     protected static ?string $model = Attendance::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?int $navigationSort = 8;
 
     public static function form(Form $form): Form
     {

@@ -16,11 +16,13 @@ use Humaidem\FilamentMapPicker\Fields\OSMMap;
 
 class OfficeResource extends Resource
 {
+    protected static ?string $navigationGroup = 'Office Management';
+
     protected static ?string $model = Office::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-building-office-2';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
